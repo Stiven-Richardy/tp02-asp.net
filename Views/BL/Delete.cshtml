@@ -1,0 +1,33 @@
+﻿@model TP02.Models.BL
+
+@{
+    ViewData["Title"] = "Excluir BL";
+}
+
+<div class="card border-danger" style="max-width: 600px; margin: 0 auto;">
+    <div class="card-header bg-danger text-white fw-bold">
+        <i class="bi bi-exclamation-triangle"></i> Confirmação de Exclusão
+    </div>
+    <div class="card-body p-4">
+        <p class="fs-5">Tem certeza que deseja excluir o BL <strong>@Model.Numero</strong>?</p>
+        <p class="text-muted small">Atenção: Todos os Containers vinculados a este BL serão apagados permanentemente (Deleção em Cascata).</p>
+
+        <hr class="my-4" />
+
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-muted">@Html.DisplayNameFor(model => model.Consignee)</dt>
+            <dd class="col-sm-8 fw-bold">@Html.DisplayFor(model => model.Consignee)</dd>
+
+            <dt class="col-sm-4 text-muted">@Html.DisplayNameFor(model => model.Navio)</dt>
+            <dd class="col-sm-8 fw-bold">@Html.DisplayFor(model => model.Navio)</dd>
+        </dl>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <a asp-action="Index" class="btn btn-light border">Cancelar</a>
+                <button type="submit" class="btn btn-danger">Sim, Excluir</button>
+            </form>
+        </div>
+    </div>
+</div>

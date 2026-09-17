@@ -1,0 +1,103 @@
+﻿@model IEnumerable<TP02.Models.BL>
+
+@{
+    ViewData["Title"] = "Relatório Geral Consolidado";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="text-secondary mb-1">Mapeamento de Cargas</h4>
+        <p class="text-muted small mb-0">Visão hierárquica de Bill of Ladings e seus respectivos Containers no pátio.</p>
+    </div>
+    <button onclick="window.print()" class="btn btn-outline-primary shadow-sm">
+        <i class="bi bi-printer"></i> Imprimir Relatório
+    </button>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info border-0 shadow-sm">
+        <i class="bi bi-info-circle me-2"></i> Não há registros no banco de dados para gerar o relatório.
+    </div>
+}
+else
+{
+    @foreach (var bl in Model)
+    {
+        <div class="card mb-4 border-0 shadow-sm" style="border-top: 4px solid #0A3D62 !important;">
+
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-light p-3 rounded text-center" style="width: 70px;">
+                        <i class="bi bi-file-earmark-text fs-4 text-primary"></i>
+                        <div class="small fw-bold mt-1 text-muted">BL</div>
+                    </div>
+                    <div>
+                        <h5 class="mb-1 fw-bold" style="color: #0A3D62;">@bl.Numero</h5>
+                        <div class="text-muted small">
+                            <span class="me-3"><i class="bi bi-person-badge"></i> <strong>Consignatário:</strong> @bl.Consignee</span>
+                            <span><i class="bi bi-water"></i> <strong>Navio:</strong> @bl.Navio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <span class="badge bg-secondary fs-6 rounded-pill px-3 py-2">
+                        @bl.Containers.Count Container(s)
+                    </span>
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                @if (bl.Containers.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-striped align-middle mb-0">
+                            <thead class="table-light text-muted small text-uppercase">
+                                <tr>
+                                    <th class="ps-4" style="width: 40%;">Número do Container</th>
+                                    <th style="width: 30%;">Categoria (Tipo)</th>
+                                    <th style="width: 30%;">Tamanho</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var container in bl.Containers)
+                                {
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-dark">
+                                            <i class="bi bi-box me-2 text-muted"></i> @container.Numero
+                                        </td>
+                                        <td>
+                                            @if (container.Tipo == "Reefer")
+                                            {
+                                                <span class="badge bg-info text-dark bg-opacity-25 border border-info px-2 py-1">
+                                                    <i class="bi bi-snow"></i> Reefer
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary px-2 py-1">
+                                                    <i class="bi bi-box"></i> Dry
+                                                </span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <span class="fw-medium">@container.Tamanho</span> <span class="text-muted small">Pés</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="p-4 text-center text-muted">
+                        <i class="bi bi-inbox fs-3 d-block mb-2 text-light"></i>
+                        Nenhuma carga (container) foi vinculada a este BL até o momento.
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<TP02.Models.Container>
+
+@{
+    ViewData["Title"] = "Controle de Containers";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="card-title mb-0 text-secondary">Estoque de Containers</h5>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Novo Container
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Numero)</th>
+                        <th>@Html.DisplayNameFor(model => model.Tipo)</th>
+                        <th>@Html.DisplayNameFor(model => model.Tamanho)</th>
+                        <th>BL Associado</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">Nenhum Container registrado.</td>
+                        </tr>
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">@Html.DisplayFor(modelItem => item.Numero)</td>
+                            <td>
+                                @if (item.Tipo == "Reefer")
+                                {
+                                    <span class="badge bg-info text-dark"><i class="bi bi-snow"></i> Reefer</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary"><i class="bi bi-box"></i> Dry</span>
+                                }
+                            </td>
+                            <td>@item.Tamanho Pés</td>
+                            <td><span class="badge bg-light text-dark border">@item.BL?.Numero</span></td>
+                            <td class="text-end">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary me-1" title="Editar">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger" title="Excluir">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

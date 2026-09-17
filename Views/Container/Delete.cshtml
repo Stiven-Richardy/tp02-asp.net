@@ -1,0 +1,33 @@
+﻿@model TP02.Models.Container
+
+@{
+    ViewData["Title"] = "Excluir Container";
+}
+
+<div class="card border-danger" style="max-width: 600px; margin: 0 auto;">
+    <div class="card-header bg-danger text-white fw-bold">
+        <i class="bi bi-exclamation-triangle"></i> Confirmação de Exclusão
+    </div>
+    <div class="card-body p-4">
+        <p class="fs-5">Tem certeza que deseja remover o Container <strong>@Model.Numero</strong> do estoque?</p>
+        <p class="text-muted small">Esta ação desvinculará a carga do respectivo Bill of Lading (@Model.BL?.Numero) e não poderá ser desfeita.</p>
+
+        <hr class="my-4" />
+
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-muted">@Html.DisplayNameFor(model => model.Tipo)</dt>
+            <dd class="col-sm-8 fw-bold">@Html.DisplayFor(model => model.Tipo)</dd>
+
+            <dt class="col-sm-4 text-muted">@Html.DisplayNameFor(model => model.Tamanho)</dt>
+            <dd class="col-sm-8 fw-bold">@Html.DisplayFor(model => model.Tamanho) Pés</dd>
+        </dl>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <a asp-action="Index" class="btn btn-light border">Cancelar</a>
+                <button type="submit" class="btn btn-danger">Sim, Excluir</button>
+            </form>
+        </div>
+    </div>
+</div>

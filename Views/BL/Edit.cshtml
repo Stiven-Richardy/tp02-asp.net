@@ -1,0 +1,45 @@
+﻿@model TP02.Models.BL
+
+@{
+    ViewData["Title"] = "Editar BL";
+}
+
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+    <div class="card-body p-4">
+        <h5 class="card-title mb-4 text-secondary">Atualizar dados do BL</h5>
+
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Numero" class="form-label fw-bold"></label>
+                <input asp-for="Numero" class="form-control" placeholder="Ex: MEDU12345678" autocomplete="off" />
+                <span asp-validation-for="Numero" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Consignee" class="form-label fw-bold"></label>
+                <input asp-for="Consignee" class="form-control" placeholder="Ex: Empresa Importadora S/A" autocomplete="off" />
+                <span asp-validation-for="Consignee" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Navio" class="form-label fw-bold"></label>
+                <input asp-for="Navio" class="form-control" placeholder="Ex: MSC Flavia" autocomplete="off" />
+                <span asp-validation-for="Navio" class="text-danger small"></span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-light border">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
